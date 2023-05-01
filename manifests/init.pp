@@ -3,9 +3,9 @@
 class dockeragent (
   $registry              = undef,
   $yum_cache             = false,
-  $lvm_bashrc            = false,
-  $install_dev_tools     = false,
-  $learning_user         = false,
+  $lvm_bashrc            = true,
+  $install_dev_tools     = true,
+  $learning_user         = true,
   $ip_base               = '172.18.0',
   $image_name            = 'agent',
 ){
