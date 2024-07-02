@@ -36,25 +36,24 @@ class dockeragent (
   }
 
   dockeragent::image { 'no_agent':
-     install_agent     => false,
-     registry          => $registry,
-     yum_cache         => $yum_cache,
-     lvm_bashrc        => $lvm_bashrc,
-     install_dev_tools => $install_dev_tools,
-     learning_user     => $learning_user,
-     gateway_ip        => $gateway_ip,
-   }
+    install_agent     => false,
+    registry          => $registry,
+    yum_cache         => $yum_cache,
+    lvm_bashrc        => $lvm_bashrc,
+    install_dev_tools => $install_dev_tools,
+    learning_user     => $learning_user,
+    gateway_ip        => $gateway_ip,
+  }
 
-   dockeragent::image { $image_name:
-     install_agent     => true,
-     image_name        => 'no_agent',
-     registry          => $registry,
-     yum_cache         => $yum_cache,
-     lvm_bashrc        => $lvm_bashrc,
-     install_dev_tools => $install_dev_tools,
-     learning_user     => $learning_user,
-     gateway_ip        => $gateway_ip,
-     require           => Dockeragent::Image['no_agent'],
-   }
-
+  dockeragent::image { $image_name:
+    install_agent     => true,
+    image_name        => 'no_agent',
+    registry          => $registry,
+    yum_cache         => $yum_cache,
+    lvm_bashrc        => $lvm_bashrc,
+    install_dev_tools => $install_dev_tools,
+    learning_user     => $learning_user,
+    gateway_ip        => $gateway_ip,
+    require           => Dockeragent::Image['no_agent'],
+  }
 }

@@ -11,7 +11,6 @@ define dockeragent::image (
   $learning_user     = false,
   $image_name        = undef,
 ){
-
   file { "/etc/docker/${title}/":
     ensure  => directory,
     require => Class['docker'],
@@ -24,11 +23,11 @@ define dockeragent::image (
   }
 
   $docker_files = [
-    {'filename' => "Dockerfile",       'template' => $dockerfile_template},
-    {'filename' => "puppet.conf",      'template' => 'puppet.conf.epp'},
-    {'filename' => "local_cache.repo", 'template' => 'local_cache.repo.epp'},
-    {'filename' => "yum.conf",         'template' => 'yum.conf.epp'},
-    {'filename' => "gemrc",            'template' => 'gemrc.epp'}
+    { 'filename' => 'Dockerfile',       'template' => $dockerfile_template },
+    { 'filename' => 'puppet.conf',     'template' => 'puppet.conf.epp' },
+    { 'filename' => 'local_cache.repo', 'template' => 'local_cache.repo.epp' },
+    { 'filename' => 'yum.conf',         'template' => 'yum.conf.epp' },
+    { 'filename' => 'gemrc',            'template' => 'gemrc.epp' }
   ]
 
   if $image_name {
@@ -44,20 +43,24 @@ define dockeragent::image (
 
   $docker_files.each |$docker_file|{
     file { "/etc/docker/${title}/${docker_file['filename']}":
-      ensure            => file,
-      content           => epp("dockeragent/${docker_file['template']}",{
-        'os_major'          => $::os['release']['major'],
-        'gateway_ip'        => $gateway_ip,
-        'basename'          => $actual_image_name,
-        'yum_cache'         => $yum_cache,
-        'lvm_bashrc'        => $lvm_bashrc,
-        'install_dev_tools' => $install_dev_tools,
-        'learning_user'     => $learning_user,
-        'gem_source_uri'    => $gem_source_uri,
-        }),
+      ensure  => file,
+      content => epp("dockeragent/${docker_file['template']}",{
+          'os_major'          => $::os['release']['major'],
+          'gateway_ip'        => $gateway_ip,
+          'basename'          => $actual_image_name,
+          'yum_cache'         => $yum_cache,
+          'lvm_bashrc'        => $lvm_bashrc,
+          'install_dev_tools' => $install_dev_tools,
+          'learning_user'     => $learning_user,
+          'gem_source_uri'    => $gem_source_uri,
+      }),
     }
   }
-
+  file { "/etc/docker/${title}/CentOS-Base.repo":
+    ensure => file,
+    mode   => '0644',
+    source => 'puppet:///modules/dockeragent/CentOS-Base.repo',
+  }
   if $lvm_bashrc {
     file { "/etc/docker/${title}/bashrc":
       ensure => file,
@@ -72,15 +75,15 @@ define dockeragent::image (
   }
 
   file { "/etc/docker/${title}/download_catalogs.sh":
-    ensure  => file,
-    mode    => '0755',
-    source  => 'puppet:///modules/dockeragent/download_catalogs.sh',
+    ensure => file,
+    mode   => '0755',
+    source => 'puppet:///modules/dockeragent/download_catalogs.sh',
   }
 
   file { "/etc/docker/${title}/crond.pam":
-    ensure  => file,
-    mode    => '0644',
-    source  => 'puppet:///modules/dockeragent/crond.pam',
+    ensure => file,
+    mode   => '0644',
+    source => 'puppet:///modules/dockeragent/crond.pam',
   }
 
   docker::image { $title:
