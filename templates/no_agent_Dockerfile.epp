@@ -8,13 +8,13 @@ ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppe
 ADD yum.conf /etc/yum.conf
 COPY CentOS-Base.repo /etc/yum.repos.d/
 RUN yum clean all; \
-  yum install -y yum-plugin-ovl
-<% $packages = 'tar dmidecode which logrotate cyrus-sasl libxslt cronie pciutils git rubygems vim tree csh zsh net-tools wget redhat-logos openssh-server sudo gcc mysql-devel ruby-devel postgresql-libs postgresql-devel redhat-lsb-core' -%>; \
-  yum -y install <%= $packages %>
+  yum install -y yum-plugin-ovl; \
+<% $packages = 'tar dmidecode which logrotate cyrus-sasl libxslt cronie pciutils git rubygems vim tree csh zsh net-tools wget redhat-logos openssh-server sudo gcc mysql-devel ruby-devel postgresql-libs postgresql-devel redhat-lsb-core' -%>
+  yum -y install <%= $packages %>; \
 <% if $install_dev_tools { -%>
-RUN yum -y groupinstall 'Development Tools'
+  yum -y groupinstall 'Development Tools'; \
 <% } -%>
-RUN yum clean all; \
+  yum clean all; \
   gem install multipart-post -v 1.2.0; \
   echo 'root:puppet' | chpasswd; \
   mkdir /var/run/sshd; \
