@@ -56,11 +56,11 @@ define dockeragent::image (
       }),
     }
   }
-  file { "/etc/docker/${title}/CentOS-Base.repo":
-    ensure => file,
-    mode   => '0644',
-    source => 'puppet:///modules/dockeragent/CentOS-Base.repo',
-  }
+  # file { "/etc/docker/${title}/CentOS-Base.repo":
+  #   ensure => file,
+  #   mode   => '0644',
+  #   source => 'puppet:///modules/dockeragent/CentOS-Base.repo',
+  # }
   if $lvm_bashrc {
     file { "/etc/docker/${title}/bashrc":
       ensure => file,
