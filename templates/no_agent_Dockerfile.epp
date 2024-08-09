@@ -2,17 +2,11 @@
 # This image is for training purposes and is not intended for production environments.
 FROM <%= $basename %>
 MAINTAINER Services Portfolio <services-portfolio@puppet.com>
-ENV HOME /root/
-ENV TERM xterm
-ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/puppet/bin
-ADD yum.conf /etc/yum.conf
-# COPY CentOS-Base.repo /etc/yum.repos.d/
+ENV HOME=/root/
+ENV TERM=xterm
+ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/puppet/bin
 RUN yum clean all; \
-  sed -i s/mirror.centos.org/vault.centos.org/g /etc/yum.repos.d/*.repo; \
-  sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/*.repo; \
-  sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/*.repo; \
-  yum install -y yum-plugin-ovl; \
-<% $packages = 'tar dmidecode which logrotate cyrus-sasl libxslt cronie pciutils git rubygems vim tree csh zsh net-tools wget redhat-logos openssh-server sudo gcc mysql-devel ruby-devel postgresql-libs postgresql-devel redhat-lsb-core' -%>
+<% $packages = 'tar dmidecode which logrotate cyrus-sasl libxslt cronie pciutils git rubygems vim zsh net-tools wget openssh-server sudo gcc ruby-devel postgresql-libs postgresql-devel' -%>
   yum -y install <%= $packages %>; \
 <% if $install_dev_tools { -%>
   yum -y groupinstall 'Development Tools'; \
