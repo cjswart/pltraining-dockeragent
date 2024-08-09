@@ -35,7 +35,7 @@ define dockeragent::image (
   } else {
     $actual_image_name = $registry ? {
       undef   => 'centos:7',
-      default => "${registry}/centos:7",
+      default => "${registry}",
     }
   }
 
