@@ -1,4 +1,4 @@
-# Builds a basic rhel<%= $os_major %> container with pe-agent installed
+images# Builds a basic rhel<%= $os_major %> container with pe-agent installed
 # This image is for training purposes and is not intended for production environments.
 FROM <%= $basename %>
 MAINTAINER Services Portfolio <services-portfolio@puppet.com>
