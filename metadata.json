@@ -1,8 +1,8 @@
 {
   "operatingsystem_support": [
     {
-      "operatingsystem": "CentOS",
-      "operatingsystemrelease": [ "5.0", "6.0", "7.0" ]
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [ "9.4" ]
     }
   ],
   "requirements": [
