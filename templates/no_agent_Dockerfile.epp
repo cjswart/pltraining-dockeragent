@@ -6,7 +6,7 @@ ENV HOME=/root/
 ENV TERM=xterm
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/puppet/bin
 RUN yum clean all; \
-<% $packages = 'tar dmidecode which logrotate cyrus-sasl libxslt cronie pciutils git rubygems vim zsh net-tools wget openssh-server sudo gcc ruby-devel postgresql-libs postgresql-devel' -%>
+<% $packages = 'tar dmidecode which logrotate cyrus-sasl libxslt cronie pciutils git rubygems vim zsh net-tools wget openssh-server sudo gcc ruby-devel postgresql-libs postgresql-devel hostname' -%>
   yum -y install <%= $packages %>; \
 <% if $install_dev_tools { -%>
   yum -y groupinstall 'Development Tools'; \
