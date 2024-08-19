@@ -21,7 +21,7 @@ class dockeragent (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => '{ "userns-remap": "default" }'
+    content => '{ "userns-remap": "default" }',
     require => Class['docker'],
   }
   file { '/etc/docker/ssl_dir/':
