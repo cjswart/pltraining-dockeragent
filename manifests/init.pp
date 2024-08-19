@@ -16,6 +16,14 @@ class dockeragent (
   # $ip_range   = "${ip_base}.2/24"
   $ip_range   = "${ip_base}.0/24"
 
+  file { '/etc/docker/daemon.json':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => '{ "userns-remap": "default" }'
+    require => Class['docker'],
+  }
   file { '/etc/docker/ssl_dir/':
     ensure  => directory,
     require => Class['docker'],
