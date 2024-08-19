@@ -20,7 +20,7 @@ define dockeragent::node (
     '/var/cache/yum:/var/cache/yum',
     '/etc/yum.repos.d:/etc/yum.repos.d',
     '/opt/puppetlabs/server/data:/opt/puppetlabs/server/data',
-    '/sys/fs/cgroup:/sys/fs/cgroup:ro',
+    # '/sys/fs/cgroup:/sys/fs/cgroup:ro',
     '/etc/docker/ssl_dir/:/etc/puppetlabs/puppet/ssl',
     '/var/cache/rubygems:/var/cache/rubygems',
   ]
@@ -43,7 +43,7 @@ define dockeragent::node (
     extra_parameters      => [
       "--add-host \"${::fqdn} puppet:${gateway_ip}\"",
       '--security-opt seccomp=unconfined',
-      '--restart=always',
+      '--restart=no',
       '--tmpfs /tmp',
       '--tmpfs /run',
     ],
