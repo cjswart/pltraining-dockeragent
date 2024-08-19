@@ -16,7 +16,7 @@ RUN yum clean all; \
   echo 'root:puppet' | chpasswd; \
   mkdir /var/run/sshd; \
   systemctl enable sshd.service
-EXPOSE 22
+EXPOSE 2222:22
 <% if $lvm_bashrc { -%>
 ADD bashrc /root/.bashrc
 ADD bash_profile /root/.bash_profile
