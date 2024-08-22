@@ -15,6 +15,7 @@ RUN yum clean all; \
   gem install multipart-post -v 1.2.0; \
   echo 'root:puppet' | chpasswd; \
   mkdir /var/run/sshd; \
+  ssh-keygen -A; \
   systemctl enable sshd.service
 <% if $lvm_bashrc { -%>
 ADD bashrc /root/.bashrc
