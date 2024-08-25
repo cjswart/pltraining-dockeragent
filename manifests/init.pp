@@ -46,7 +46,7 @@ class dockeragent (
   dockeragent::image { 'no_agent':
     install_agent     => false,
     #registry          => 'redhat/ubi9:latest',
-    registry          => 'centos:7',
+    registry          => 'redhat/ubi9',
     yum_cache         => $yum_cache,
     lvm_bashrc        => $lvm_bashrc,
     install_dev_tools => $install_dev_tools,
