@@ -16,6 +16,14 @@ class dockeragent (
   # $ip_range   = "${ip_base}.2/24"
   $ip_range   = "${ip_base}.0/24"
 
+  file { '/etc/docker/daemon.json':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => '{ "userns-remap": "default" }',
+    require => Class['docker'],
+  }
   file { '/etc/docker/ssl_dir/':
     ensure  => directory,
     require => Class['docker'],
@@ -37,7 +45,8 @@ class dockeragent (
 
   dockeragent::image { 'no_agent':
     install_agent     => false,
-    registry          => $registry,
+    #registry          => 'redhat/ubi9:latest',
+    registry          => 'redhat/ubi9',
     yum_cache         => $yum_cache,
     lvm_bashrc        => $lvm_bashrc,
     install_dev_tools => $install_dev_tools,
